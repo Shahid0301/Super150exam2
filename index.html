@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3rd year Assignment</title>
+</head>
+<body>
+    <style>
+        body {
+  background-color: #e9e9e9;
+}
+input[type=radio]#colour1 {
+
+    accent-color: #e9e9e9;
+}
+input[type=radio]#colour2 {
+ 
+    accent-color: pink;
+}
+input[type=radio]#colour3 {
+
+    accent-color: blue;
+}
+input[type=radio]#colour4 {
+
+    accent-color: green;
+}
+input[type=radio]#colour5 {
+
+    accent-color:black;
+}
+.form{
+    padding-bottom: 20px;
+}
+.center{
+    text-align: center;
+}
+.boldborder{
+    border: 5px solid grey;
+    margin-left: 200px;
+    margin-right: 200px;
+}
+.biginput{
+
+    font-size:1.5em;
+
+}
+.colourchange{
+    text-align: center;
+    margin-top: 20px;
+    margin-left: 630px;
+    margin-right: 630px;
+    margin-bottom: 20px;
+padding: 20px;
+background-color: white;
+border-radius: 10px;
+
+}
+.colourchange input{
+    transform: scale(2);
+}
+body h1 {
+
+  font-family: serif;
+  font-size: 2em;
+  color: black;
+  text-decoration: underline;
+}
+
+
+    </style>
+    <div class="center boldborder">
+    <h1>SEARCH YOUR FAVOURITE MOVIE</h1>
+    <div class="form">
+
+    <input class="biginput" type = "text" id = "movie" placeholder = "Search" />
+    <button class="biginput" id = "submit" onclick="loadDoc()">Submit</button>
+
+</div>
+</div>
+<div class="colourchange">
+<input type="radio"id="colour1"  name="age"  style="color:red ;"  >
+<input type="radio" id="colour2" name="age" style="color: ;" >
+<input type="radio" id="colour3" name="age" style="color: ;" >
+<input type="radio" id="colour4" name="age" style="color: ;" >
+<input type="radio" id="colour5" name="age" style="color: ;" >
+
+
+</div>
+<div class="boldborder" id = "demo"></div>
+<script>
+    document.getElementById("colour1").addEventListener("click", function(){
+    document.body.style.backgroundColor = "#e9e9e9";
+});
+document.getElementById("colour2").addEventListener("click", function(){
+    document.body.style.backgroundColor = "pink";
+});
+document.getElementById("colour3").addEventListener("click", function(){
+    document.body.style.backgroundColor = "blue";
+});
+document.getElementById("colour4").addEventListener("click", function(){
+    document.body.style.backgroundColor = "green";
+});
+document.getElementById("colour5").addEventListener("click", function(){
+    document.body.style.backgroundColor = "black";
+});
+
+function loadDoc() {
+  var name = document.getElementById('movie').value;
+  document.getElementById('demo').innerHTML = '';
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var response = JSON.parse(this.responseText);
+      for(var i = 0; i < response.length; i++){
+        let r = response[i].show.image.medium;
+        document.getElementById('demo').innerHTML = document.getElementById('demo').innerHTML + `<img src ='${r}' />`;
+      }
+    }
+  };
+  xhttp.open("GET", `https://api.tvmaze.com/search/shows?q=${name}`, true);
+  xhttp.send();
+}
+</script>
+</body>
+</html>
